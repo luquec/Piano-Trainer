@@ -143,7 +143,6 @@ function releaseKey(pitch) {
 
 // ------------------------------  JUEGO  ------------------------------
 
-
 function withStartBeats(notes) {
   let beat = 0;
   return notes.map((note) => {
@@ -156,6 +155,7 @@ function withStartBeats(notes) {
 function startSong(song) {
   stopLoop();
   currentSong = {...song, notes: withStartBeats(song.notes) };
+  screens.game.classList.remove("free-mode");
   showScreen("game");
   document.querySelector(".song-name").textContent = "Song: " + currentSong.title;
   document.getElementById("score-total").textContent = currentSong.notes.length;
@@ -165,6 +165,14 @@ function startSong(song) {
   updateScore();
   createNoteBlocks();
   draw();
+}
+
+function startFreePlay() {
+  stopLoop();
+  currentSong = null;
+  screens.game.classList.add("free-mode");
+  document.querySelector(".song-name").textContent = "Free Play";
+  showScreen("game");
 }
 
 function finishSong() {
@@ -281,14 +289,6 @@ function showSongList() {
 }
 
 
-
-
-//JUEGO
-
-//RESULTADOS
-
-
-
 // ------------------------------  EVENTOS  ------------------------------
 
 //Teclado
@@ -326,10 +326,8 @@ piano.addEventListener("mouseup", handleMouseRelease);
 piano.addEventListener("mouseout", handleMouseRelease);
 
 
-
-
 //Boton Free Play
-document.getElementById("free-play-btn").addEventListener("click", () => showScreen("game"));
+document.getElementById("free-play-btn").addEventListener("click", startFreePlay);
 
 //Boton Play
 document.getElementById("play-btn").addEventListener("click", () => {audio.resume(); startLoop()});
@@ -342,7 +340,6 @@ document.getElementById("results-back-btn").addEventListener("click", () => show
 
 //Boton Play Again
 document.getElementById("play-again-btn").addEventListener("click", () => {startSong(currentSong)});
-
 
 
 // ------------------------------  INICIO  ------------------------------

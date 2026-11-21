@@ -87,6 +87,13 @@ header {
     font-size: 24px;
 }
 
+    .free-mode .bar,
+    .free-mode .progress,
+    .free-mode #play-btn {
+        display: none;
+    }
+
+
 .progress {
     display: flex;
     gap: 40px;
@@ -98,6 +105,7 @@ header {
     display: flex;
     gap: 40px;
 }
+
 
 /*----------------------- Bar ----------------------*/
 
