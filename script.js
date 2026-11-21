@@ -90,6 +90,21 @@ let animationId = null;
 let misses = 0;
 
 
+// ------------------------------  ELEMENTOS  ------------------------------
+
+const bar = document.querySelector(".bar");
+
+const HIT_TOLERANCE = 0.1; 
+
+const piano = document.querySelector(".piano");
+
+const screens = {
+  menu: document.getElementById("menu-screen"),
+  game: document.getElementById("game-screen"),
+  results: document.getElementById("results-screen"),
+};
+
+
 // ------------------------------  SONIDO  ------------------------------
 
 
@@ -183,7 +198,6 @@ function finishSong() {
 
 
 //Bar
-const bar = document.querySelector(".bar");
 
 function createNoteBlocks() {
   bar.querySelectorAll(".note-block").forEach((block) => block.remove()); //Borra blocks de partida anterior
@@ -246,6 +260,7 @@ function updateScore() {
 function checkNote(pitch) {
   const expected = currentSong.notes[nextIndex];
   if (pitch === expected.pitch) {
+    if (songBeat < expected.start - HIT_TOLERANCE) return;  
     noteBlocks[nextIndex].classList.add("hit");
     nextIndex++;
     updateScore();
@@ -260,14 +275,7 @@ function checkNote(pitch) {
 
 // ------------------------------  PANTALLAS  ------------------------------
 
-
 //Mostrar/Ocultar menu
-const screens = {
-  menu: document.getElementById("menu-screen"),
-  game: document.getElementById("game-screen"),
-  results: document.getElementById("results-screen"),
-};
-
 function showScreen(name) {         
   if (name !== "game") stopLoop();                 //Solo muestra la pantalla que se llama
   for (const screen of Object.values(screens)) {
@@ -295,6 +303,7 @@ function showSongList() {
 
 document.addEventListener("keydown", (event) => {
   if (event.repeat) return;               // holding a key fires keydown again and again
+  if (screens.game.classList.contains("hidden")) return;
   const pitch = KEY_TO_PITCH[event.code];
   if (!pitch) return;                     // not one of our keys
   pressKey(pitch);                        // the same function a mouse click calls
@@ -307,8 +316,6 @@ document.addEventListener("keyup", (event) => {
 
 
 //Mouse
-
-const piano = document.querySelector(".piano");
 
 piano.addEventListener("mousedown", (event) => {
   const pitch = event.target.dataset.pitch;
