@@ -1,0 +1,243 @@
+.hidden {
+    display: none !important;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background-color: #171D1C;
+    color: #EFE9F4;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 700;
+}
+
+.btn {
+    background-color: #12201e;
+    color: white;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: large;
+    border-radius: 10px;
+    padding: 8px 24px;
+    min-width: 140px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+
+/*----------------------- Header ----------------------*/
+
+header {
+    color: white;
+    font-size: large;
+    border-bottom: 1px solid white;
+    padding-left: 40px;
+}
+
+/*----------------------- Menu Screen ----------------------*/
+
+#menu-screen, #results-screen {
+    background-color: #1B211A;
+    color: white;
+    padding: 40px;
+    border: 2px solid white;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 500px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+#song-list {
+    font-size:x-large;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    margin: 0;
+}
+
+#song-list .btn {
+    width: 100%;
+    max-width: 320px
+}
+
+#free-play-btn {
+    width: 100%;
+    margin-top: 16px;
+    background-color: #05130e;
+}
+
+/*----------------------- Game Screen ----------------------*/
+#game-screen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 800px;
+    font-size: 24px;
+}
+
+.progress {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.controls {
+    display: flex;
+    gap: 40px;
+}
+
+/*----------------------- Bar ----------------------*/
+
+.bar{
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+    border: 2px solid #697565;
+    border-radius: 7px;
+    background-color: #071b15;
+    position: relative;
+}
+
+.note-block {
+    position: absolute;
+    top: 0;
+    border: 1px solid #071b15;
+    border-radius: 4px;
+    background-color: #06b6d4;
+}
+
+.hit-line {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #fc1717;
+}
+
+/*----------------------- Piano ----------------------*/
+
+.piano-container {
+    display: flex;
+    background: #e4b97d0d;
+    border: 2px solid #EFE9F4;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+}
+
+.piano {
+    position: relative;
+    height: 160px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    display: flex;
+}
+
+.white-key {    
+    background-color: white;
+    color: black;    
+    width: 10%;
+    height: 160px;
+    border-radius: 0 0 4px 4px;    
+}
+
+.white-key.active { background-color: #9fd8ff; }
+.white-key.wrong { background-color: #ff6b6b; }
+
+.black-key {
+    z-index: 10;
+    width: 6%;
+    height: 95px;
+    border: 1px solid #ffffff0d;
+    border-radius: 0 0 3px 3px;
+    position: absolute;
+    background-color: black;
+    color: white;    
+}
+
+.black-key.active { background-color: #21465e; }
+.black-key.wrong { background-color: #b02a2a; }
+
+.white-key, .black-key {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 80ms, transform 80ms;
+}
+
+.black-key[data-pitch="C#4"] {
+    left: calc(10% - 3%);
+}
+
+.black-key[data-pitch="D#4"] {
+    left: calc(20% - 3%);
+}
+
+.black-key[data-pitch="F#4"] {
+    left: calc(40% - 3%);
+}
+
+.black-key[data-pitch="G#4"] {
+    left: calc(50% - 3%);
+}
+
+.black-key[data-pitch="A#4"] {
+    left: calc(60% - 3%);
+}
+
+.black-key[data-pitch="C#5"] {
+    left: calc(80% - 3%);
+}
+
+.black-key[data-pitch="D#5"] {
+    left: calc(90% - 3%);
+}
+
+
+/*----------------------- Results Screen ----------------------*/
+
+#results-screen h2 { 
+    margin: 0; 
+}
+
+.results {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.stat {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-size: larger;
+}
+
+.result-value {
+    font-size:xx-large;
+}
+
+.result-btns {
+    display: flex;
+    gap: 24px;
+}

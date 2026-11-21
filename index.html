@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Trainer</title>
+</head>
+<body>
+    <header class="header">  
+        <h1 class="name">Piano Trainer</h1>
+    </header>
+ <!-- ``````````````````````` Menu Screen``````````````````````` -->
+    <main class="main">      
+        <div id="menu-screen">                  
+            <div id="song-list"> 
+                <span class="pick">Pick a song:</span>
+                                                                <!--JS lo llena con SONGS-->
+            </div>                           
+            <button id="free-play-btn" class="btn">Free Play</button>
+        </div>     
+        
+    <!-- ``````````````````````` Game Screen ``````````````````````` -->                         
+        <div id="game-screen" class="hidden">
+            <span class="song-name">Song: </span>  <!--Conectar a SONGS-->
+            <div class="progress">
+                <div class="score">
+                    <span id="score-value">3</span>
+                    <span>/</span>
+                    <span id="score-total">30</span>
+                    <span class="score-label">Progress</span>
+                </div>
+                <div class="misses">
+                    <span id="misses-value">4</span>
+                    <span class="score-label">Misses</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="play-btn" class="btn">
+                    <span class="play-btn-label">Play</span>
+                </button>
+                <button id="back-btn" class="btn">
+                    <span class="back-btn-label">Back to Menu</span>
+                </button>
+            </div>
+    <!-- ``````````````````````` Bar ``````````````````````` -->    
+            <div class="bar">
+                                                        <!-- barra para las notas que caen-->
+                <div class="hit-line"></div>                      <!---Hit line-->
+            </div>
+    <!-- ``````````````````````` Piano ``````````````````````` -->    
+            <div class="piano-container">
+                <div class="piano">
+                    <button data-pitch="C4" class="white-key" title="C4"></button>
+                    <button data-pitch="D4" class="white-key" title="D4"></button>
+                    <button data-pitch="E4" class="white-key" title="E4"></button>
+                    <button data-pitch="F4" class="white-key" title="F4"></button>
+                    <button data-pitch="G4" class="white-key" title="G4"></button>
+                    <button data-pitch="A4" class="white-key" title="A4"></button>
+                    <button data-pitch="B4" class="white-key" title="B4"></button>
+                    <button data-pitch="C5" class="white-key" title="C5"></button>
+                    <button data-pitch="D5" class="white-key" title="D5"></button>
+                    <button data-pitch="E5" class="white-key" title="E5"></button>
+                    <button data-pitch="C#4" class="black-key" title="C#4"></button>
+                    <button data-pitch="D#4" class="black-key" title="D#4"></button>
+                    <button data-pitch="F#4" class="black-key" title="F#4"></button>
+                    <button data-pitch="G#4" class="black-key" title="G#4"></button>
+                    <button data-pitch="A#4" class="black-key" title="A#4"></button>
+                    <button data-pitch="C#5" class="black-key" title="C#5"></button>
+                    <button data-pitch="D#5" class="black-key" title="D#5"></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ``````````````````````` Results Screen ```````````````````````-->
+    <section id="results-screen" class="hidden">
+        <h2>Results:</h2>
+        <div class="results">
+            <div class="stat">
+                <span id="result-value-correct" class="result-value">3</span>
+                <span class="result-label">Correct</span>
+            </div>
+            <div class="stat">
+                <span id="result-value-wrong" class="result-value">4</span>
+                <span class="result-label">Misses</span>
+            </div>
+        </div>
+        <div class="result-btns">
+            <button id="play-again-btn" class="btn">Play Again</button>
+            <button id="results-back-btn" class="btn">Back to Menu</button>
+        </div>
+    </section>
+    <script src="script.js"></script>    
+</body>
+</html>
