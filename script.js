@@ -85,6 +85,9 @@ let nextIndex = 0;        // the note the player must hit next
 let lastTime = null;
 let currentSong = null;
 let noteBlocks = [];
+let playing = false;
+let animationId = null;
+let misses = 0;
 
 
 // ------------------------------  SONIDO  ------------------------------
@@ -130,10 +133,11 @@ function pressKey(pitch) {
   audio.resume();
   playTone(pitch);
   getKey(pitch).classList.add("active");
+  if (playing) checkNote(pitch);
 }
 
 function releaseKey(pitch) {
-  getKey(pitch).classList.remove("active");
+  getKey(pitch).classList.remove("active","wrong");
 }
 
 
@@ -150,17 +154,25 @@ function withStartBeats(notes) {
 }
 
 function startSong(song) {
+  stopLoop();
   currentSong = {...song, notes: withStartBeats(song.notes) };
   showScreen("game");
   document.querySelector(".song-name").textContent = "Song: " + currentSong.title;
   document.getElementById("score-total").textContent = currentSong.notes.length;
-  document.getElementById("score-value").textContent = 0;
-  document.getElementById("misses-value").textContent = 0;
   songBeat = 0;
   nextIndex = 0;
+  misses = 0;
+  updateScore();
   createNoteBlocks();
   draw();
 }
+
+function finishSong() {
+  document.getElementById("result-value-correct").textContent = nextIndex;
+  document.getElementById("result-value-wrong").textContent = misses;
+  showScreen("results");
+}
+
 
 //Bar
 const bar = document.querySelector(".bar");
@@ -168,9 +180,7 @@ const bar = document.querySelector(".bar");
 function createNoteBlocks() {
   bar.querySelectorAll(".note-block").forEach((block) => block.remove()); //Borra blocks de partida anterior
   noteBlocks = [];
-
   const barRect = bar.getBoundingClientRect();
-
   for (const note of currentSong.notes) {
     const keyRect = getKey(note.pitch).getBoundingClientRect();  //Copia el tamaño de las teclas
     const block = document.createElement("div");
@@ -193,7 +203,6 @@ function draw() {
 }
 
 
-/*
 function frame(now) {
   if (lastTime !== null) {
     const seconds = Math.min((now - lastTime) / 1000, 0.1); // cap big jumps (e.g. after a hidden tab)
@@ -203,11 +212,43 @@ function frame(now) {
   }
   lastTime = now;
   draw(); // each block: bottom edge at HIT_Y - (note.start - songBeat) * PX_PER_BEAT
-  if (playing) requestAnimationFrame(frame);
+  if (playing) animationId = requestAnimationFrame(frame);
 }
-*/
 
-//FUNCIONES DE LA CANCION
+
+//Loop
+function startLoop() {
+  stopLoop();          //Detiene si habia uno antes
+  playing = true;
+  lastTime = null;
+  animationId = requestAnimationFrame(frame);
+}
+
+function stopLoop() {
+  playing = false;
+  cancelAnimationFrame(animationId);
+}
+
+//Score
+function updateScore() {
+  document.getElementById("score-value").textContent = nextIndex;
+  document.getElementById("misses-value").textContent = misses;
+}
+
+function checkNote(pitch) {
+  const expected = currentSong.notes[nextIndex];
+  if (pitch === expected.pitch) {
+    noteBlocks[nextIndex].classList.add("hit");
+    nextIndex++;
+    updateScore();
+    if (nextIndex === currentSong.notes.length) finishSong();  //Detecta si hay mas notas por tocar
+  } else {
+      misses++;
+      getKey(pitch).classList.add("wrong");
+      updateScore();
+    }
+}
+
 
 // ------------------------------  PANTALLAS  ------------------------------
 
@@ -219,7 +260,8 @@ const screens = {
   results: document.getElementById("results-screen"),
 };
 
-function showScreen(name) {                          //Solo muestra la pantalla que se llama
+function showScreen(name) {         
+  if (name !== "game") stopLoop();                 //Solo muestra la pantalla que se llama
   for (const screen of Object.values(screens)) {
     screen.classList.add("hidden");
   }
@@ -284,14 +326,23 @@ piano.addEventListener("mouseup", handleMouseRelease);
 piano.addEventListener("mouseout", handleMouseRelease);
 
 
-//Boton Back to Menu
-document.getElementById("back-btn").addEventListener("click", () => showScreen("menu"));
+
 
 //Boton Free Play
 document.getElementById("free-play-btn").addEventListener("click", () => showScreen("game"));
 
+//Boton Play
+document.getElementById("play-btn").addEventListener("click", () => {audio.resume(); startLoop()});
+
+//Boton Back to Menu
+document.getElementById("back-btn").addEventListener("click", () => showScreen("menu"));
+
 //Boton Back desde Results screen
 document.getElementById("results-back-btn").addEventListener("click", () => showScreen("menu"));
+
+//Boton Play Again
+document.getElementById("play-again-btn").addEventListener("click", () => {startSong(currentSong)});
+
 
 
 // ------------------------------  INICIO  ------------------------------
