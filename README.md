@@ -13,7 +13,6 @@ Cuando una nota llega a la línea, la canción se detiene y espera hasta que pre
   - **Teclas negras (fila superior):** `W` (C#4), `E` (D#4), `T` (F#4), `Y` (G#4), `U` (A#4), `O` (C#5), `P` (D#5).
   - **Al acertar:** La tecla se ilumina en azul, suena su nota correspondiente y la canción avanza hacia la siguiente nota.
   - **Al fallar:** La tecla suena igualmente pero se ilumina en rojo y se suma un fallo (*Miss*) al contador.
-  # Piano Trainer
 
 ## Canciones
 - Twinkle, Twinkle, Little Star
