@@ -1,7 +1,7 @@
 # Piano Trainer
 
 **Play here:** https://luquec.github.io/Piano-Trainer/  
-**Video:** 
+**Video:** https://youtu.be/2jm3nfFjFGE  
 
 Piano Trainer es un juego web interactivo que permite aprender y practicar canciones en un piano virtual utilizando el teclado de la computadora o mouse.
 
